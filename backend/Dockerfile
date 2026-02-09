@@ -6,20 +6,22 @@ FROM node:latest AS build
 WORKDIR /app
  
 # Copy package.json
-COPY package.json ./
+COPY package.json /app
  
 # Install dependencies
 RUN npm install
  
 # Copy the rest of files
-COPY . .
+COPY . /app
  
 # Build
-RUN npm run build
+CMD ["node", "./dist/index.js"]
 
 ## Production Stage
-FROM node:latest AS production
-ENV NODE_ENV=production
-COPY --from=build /app/dist ./dist/
+FROM node:22-alpine AS production
+WORKDIR /app
+COPY --from=build /app/package*.json ./
+RUN npm install --only=production
+COPY --from=build /app/dist ./dist
 EXPOSE 8080
-CMD ["node", "./dist/index.js"]
+CMD ["node", "dist/index.js"]

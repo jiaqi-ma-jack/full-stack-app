@@ -8,7 +8,7 @@ docker build -t frontend-prod .
 
 Run
 ```
-docker run -p 80:80 frontend-prod
+docker run -p 3000:80 frontend-prod
 ```
 
 
