@@ -8,8 +8,10 @@ docker build -t frontend-prod .
 
 Run
 ```
-docker run -p 3000:3000 frontend-prod
+docker run -p 3000:80 frontend-prod
 ```
+- nginx runs on port 80
+- -p localPort:containerPort
 
 Load the image into the cluster
 ```
@@ -37,4 +39,9 @@ kind load docker-image backend-prod
 ## Kubernetes deployment
 ```
 kubectl apply -f .
+```
+
+Start a IP route network locally
+```
+sudo cloud-provider-kind
 ```

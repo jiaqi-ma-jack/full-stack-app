@@ -20,5 +20,5 @@ spec:
           image: docker.io/library/frontend-prod
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 3000
+            - containerPort: 80
               name: frontend

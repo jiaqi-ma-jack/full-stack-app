@@ -33,7 +33,7 @@ function App() {
     const requestBody: RequestBody = new RequestBody(new Date());
 
     try {
-      const response = await fetch(`http://backend-service:8080/api/`, {
+      const response = await fetch(`http://backend-service.default.svc.cluster.local:8080/api/`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",

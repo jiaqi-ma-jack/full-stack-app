@@ -18,7 +18,9 @@ COPY . .
 RUN npm run build
 
 ## Production Stage
-FROM nginx:stable-alpine AS production
+# nginx runs on port 80 by default
+# EXPOSE: serves for documentation purpose only
+FROM nginx:stable-alpine AS production 
 COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 3000
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
