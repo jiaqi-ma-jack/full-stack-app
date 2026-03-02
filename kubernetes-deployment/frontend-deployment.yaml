@@ -22,3 +22,6 @@ spec:
           ports:
             - containerPort: 80
               name: frontend
+          env:
+            - name: REACT_APP_API_IP
+              value: 172.18.0.4

@@ -5,7 +5,7 @@ metadata:
   labels:
     tier: backend
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - name: "backend-service"
       port: 8080

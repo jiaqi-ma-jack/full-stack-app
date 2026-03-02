@@ -13,6 +13,8 @@ RUN npm install
  
 # Copy the rest of files
 COPY . .
+
+# Set environment variable
  
 # Build
 RUN npm run build
