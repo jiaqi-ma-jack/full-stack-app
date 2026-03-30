@@ -52,6 +52,11 @@ Load the image into the cluster
 kind load docker-image performance-test-prod
 ```
 
+View logs after creating the job
+```
+kubectl logs job/performance-test-job
+```
+
 
 ## Kubernetes deployment
 ```
