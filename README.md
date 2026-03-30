@@ -36,6 +36,23 @@ kind load docker-image backend-prod
 ```
 
 
+## Performance test job
+Build
+```
+docker build -t performance-test-prod .
+```
+
+Run
+```
+docker run performance-test-prod
+```
+
+Load the image into the cluster
+```
+kind load docker-image performance-test-prod
+```
+
+
 ## Kubernetes deployment
 ```
 kubectl apply -f .

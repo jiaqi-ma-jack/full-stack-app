@@ -33,7 +33,7 @@ function App() {
     const requestBody: RequestBody = new RequestBody(new Date());
 
     try {
-      const response = await fetch(`http://${process.env.REACT_APP_API_IP}:8080/api/`, {
+      const response = await fetch(`http://172.18.0.4:8080/api/`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
