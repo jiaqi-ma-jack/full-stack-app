@@ -67,3 +67,18 @@ Start a IP route network locally
 ```
 sudo cloud-provider-kind
 ```
+
+
+## K6 Operator
+```
+kubectl create configmap my-k6-test --from-file ../performance-test/script.js
+```
+
+```
+kubectl apply -f k6-resource.yaml
+```
+
+k6 operators run on separate pods. To view logs:
+```
+kubectl logs -f k6-sample-1-5thtf
+```
