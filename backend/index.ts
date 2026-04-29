@@ -44,6 +44,69 @@ app.post("/api", async function (req: Request, res: Response) {
   res.send(responseBody);
 });
 
+app.get("/concurrency", async function (req: Request, res: Response) {
+  const urls = [
+    "https://status.snyk.io/",
+    "https://www.githubstatus.com/",
+    "https://confluence.status.atlassian.com/",
+    "https://status.datadoghq.com/",
+    "https://status.circleci.com/",
+    "https://do-not-exist.com/",
+  ];
+
+  const results = await Promise.allSettled(urls.map((url) => fetch(url)));
+
+  let responseBody: {
+    success: string[];
+    failed: string[];
+  } = {
+    success: [],
+    failed: [],
+  };
+  results.forEach((result) => {
+    if (result.status === "fulfilled") {
+      responseBody.success.push(`Success: ${result.value.url}`);
+    } else {
+      responseBody.failed.push(`Failed: ${result.reason}`);
+    }
+  });
+
+  res.status(200);
+  res.send(responseBody);
+});
+
+app.get("/sequence", async function (req: Request, res: Response) {
+  const urls = [
+    "https://status.snyk.io/",
+    "https://www.githubstatus.com/",
+    "https://confluence.status.atlassian.com/",
+    "https://status.datadoghq.com/",
+    "https://status.circleci.com/",
+    "https://do-not-exist.com/",
+  ];
+
+  let responseBody: {
+    success: string[];
+    failed: string[];
+  } = {
+    success: [],
+    failed: [],
+  };
+  for (const url of urls) {
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        responseBody.success.push(`Success: ${url}`);
+      }
+    } catch (error) {
+      responseBody.failed.push(`Failed: ${url} ${error}`);
+    }
+  }
+
+  res.status(200);
+  res.send(responseBody);
+});
+
 // Start the server
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

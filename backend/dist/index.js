@@ -86,6 +86,90 @@ app.post("/api", function (req, res) {
         });
     });
 });
+app.get("/concurrency", function (req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var urls, results, responseBody;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    urls = [
+                        "https://status.snyk.io/",
+                        "https://www.githubstatus.com/",
+                        "https://confluence.status.atlassian.com/",
+                        "https://status.datadoghq.com/",
+                        "https://status.circleci.com/",
+                        "https://do-not-exist.com/",
+                    ];
+                    return [4 /*yield*/, Promise.allSettled(urls.map(function (url) { return fetch(url); }))];
+                case 1:
+                    results = _a.sent();
+                    responseBody = {
+                        success: [],
+                        failed: [],
+                    };
+                    results.forEach(function (result) {
+                        if (result.status === "fulfilled") {
+                            responseBody.success.push("Success: ".concat(result.value.url));
+                        }
+                        else {
+                            responseBody.failed.push("Failed: ".concat(result.reason));
+                        }
+                    });
+                    res.status(200);
+                    res.send(responseBody);
+                    return [2 /*return*/];
+            }
+        });
+    });
+});
+app.get("/sequence", function (req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var urls, responseBody, _i, urls_1, url, response, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    urls = [
+                        "https://status.snyk.io/",
+                        "https://www.githubstatus.com/",
+                        "https://confluence.status.atlassian.com/",
+                        "https://status.datadoghq.com/",
+                        "https://status.circleci.com/",
+                        "https://do-not-exist.com/",
+                    ];
+                    responseBody = {
+                        success: [],
+                        failed: [],
+                    };
+                    _i = 0, urls_1 = urls;
+                    _a.label = 1;
+                case 1:
+                    if (!(_i < urls_1.length)) return [3 /*break*/, 6];
+                    url = urls_1[_i];
+                    _a.label = 2;
+                case 2:
+                    _a.trys.push([2, 4, , 5]);
+                    return [4 /*yield*/, fetch(url)];
+                case 3:
+                    response = _a.sent();
+                    if (response.ok) {
+                        responseBody.success.push("Success: ".concat(url));
+                    }
+                    return [3 /*break*/, 5];
+                case 4:
+                    error_1 = _a.sent();
+                    responseBody.failed.push("Failed: ".concat(url, " ").concat(error_1));
+                    return [3 /*break*/, 5];
+                case 5:
+                    _i++;
+                    return [3 /*break*/, 1];
+                case 6:
+                    res.status(200);
+                    res.send(responseBody);
+                    return [2 /*return*/];
+            }
+        });
+    });
+});
 // Start the server
 var PORT = process.env.PORT || 8080;
 app.listen(PORT, function () {
