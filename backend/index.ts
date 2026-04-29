@@ -9,6 +9,7 @@ import cors from "cors";
 import { plainToClass } from "class-transformer";
 
 const app = express();
+const os = require("os");
 
 class RequestBody {
   time: Date;
@@ -37,6 +38,8 @@ app.post("/api", async function (req: Request, res: Response) {
   const responseBody: ResponseBody = new ResponseBody(
     "Frontend sent request at: " + new Date(body.time).toString()
   );
+  const hostname = os.hostname();
+  res.set("X-Pod-Name", hostname);
   res.contentType("application/json");
   res.status(200);
   res.send(responseBody);

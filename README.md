@@ -71,7 +71,7 @@ sudo cloud-provider-kind
 
 ## K6 Operator
 ```
-kubectl create configmap my-k6-test --from-file ../performance-test/script.js
+kubectl create configmap my-k6-test --from-file "../performance-test/script.js"
 ```
 
 ```
@@ -82,3 +82,27 @@ k6 operators run on separate pods. To view logs:
 ```
 kubectl logs -f k6-sample-1-5thtf
 ```
+
+
+## Horizontal Pod Autoscaler
+Ensure all container specs include resources.requests.cpu.
+Ensure Kubernetes [Metrics Server](https://github.com/kubernetes-sigs/metrics-server#readme) is running.
+
+```
+kubectl autoscale deployment backend-deployment --cpu=50% --min=1 --max=10
+```
+
+Check current hpa(horizontalPodAutoscaler) status:
+```
+kubectl get hpa
+```
+```
+kubectl get hpa <hpa_name> --watch
+```
+
+Check metrics server availibility:
+```
+kubectl get apiservice v1beta1.metrics.k8s.io
+```
+
+## Vertical Pod Autoscaler

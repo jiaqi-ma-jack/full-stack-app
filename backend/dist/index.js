@@ -50,6 +50,7 @@ var class_validator_1 = require("class-validator");
 var cors_1 = __importDefault(require("cors"));
 var class_transformer_1 = require("class-transformer");
 var app = (0, express_1.default)();
+var os = require("os");
 var RequestBody = /** @class */ (function () {
     function RequestBody(time) {
         this.time = time;
@@ -71,11 +72,13 @@ app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.post("/api", function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, responseBody;
+        var body, responseBody, hostname;
         return __generator(this, function (_a) {
             body = (0, class_transformer_1.plainToClass)(RequestBody, req.body);
             console.log("Received frontend request");
             responseBody = new ResponseBody("Frontend sent request at: " + new Date(body.time).toString());
+            hostname = os.hostname();
+            res.set("X-Pod-Name", hostname);
             res.contentType("application/json");
             res.status(200);
             res.send(responseBody);
