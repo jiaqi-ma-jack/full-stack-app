@@ -1,5 +1,4 @@
 import express, {
-  NextFunction,
   Request,
   RequestHandler,
   Response,

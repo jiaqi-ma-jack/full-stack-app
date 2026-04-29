@@ -24,4 +24,5 @@ spec:
               name: backend
           resources:
             requests:
-              cpu: 50m
+              cpu: 1m
+              memory: 2Mi

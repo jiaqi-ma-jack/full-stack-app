@@ -106,3 +106,7 @@ kubectl get apiservice v1beta1.metrics.k8s.io
 ```
 
 ## Vertical Pod Autoscaler
+View events specifically related to VPA actions
+```
+kubectl get events --field-selector involvedObject.kind=VerticalPodAuto --watch
+```
